@@ -6,7 +6,8 @@ import Teachers from './pages/Teachers';
 import AddStudent from './pages/AddStudent';
 import Attendance from './pages/Attendance';
 import Subjects from './pages/Subjects';
-import { LayoutDashboard, GraduationCap, UserSquare2, Bell, Search, UserCheck, BookOpen } from 'lucide-react';
+import Fees from './pages/Fees';
+import { LayoutDashboard, GraduationCap, UserSquare2, Bell, Search, UserCheck, BookOpen, CreditCard } from 'lucide-react';
 import './index.css';
 
 const Navbar = () => {
@@ -30,6 +31,7 @@ const Navbar = () => {
             <NavLink to="/teachers" icon={UserSquare2} label="Teachers" active={isActive('/teachers')} />
             <NavLink to="/attendance" icon={UserCheck} label="Attendance" active={isActive('/attendance')} />
             <NavLink to="/subjects" icon={BookOpen} label="Subjects" active={isActive('/subjects')} />
+            <NavLink to="/fees" icon={CreditCard} label="Fees" active={isActive('/fees')} />
           </div>
         </div>
 
@@ -85,6 +87,7 @@ function App() {
             <Route path="/teachers" element={<Teachers />} />
             <Route path="/attendance" element={<Attendance />} />
             <Route path="/subjects" element={<Subjects />} />
+            <Route path="/fees" element={<Fees />} />
           </Routes>
         </main>
       </div>

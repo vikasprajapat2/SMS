@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routes import auth, student, teacher, dashboard, attendance, subjects
+from .routes import auth, student, teacher, dashboard, attendance, subjects, fees
 from .database.connection import engine, Base
 from . import models # Ensure models are loaded for table creation
 
@@ -25,6 +25,7 @@ app.include_router(teacher.router)
 app.include_router(dashboard.router)
 app.include_router(attendance.router)
 app.include_router(subjects.router)
+app.include_router(fees.router)
 
 @app.get("/")
 async def root():

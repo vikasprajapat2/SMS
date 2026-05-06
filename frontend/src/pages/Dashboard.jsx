@@ -4,7 +4,7 @@ import api from '../services/api';
 import { 
   Plus, ChevronRight, Clock, MoreHorizontal, GraduationCap, 
   UserSquare2, Users, BookOpen, Calendar, CheckCircle2, 
-  ArrowUpRight, Download, FileText, ChevronDown, AlertCircle
+  ArrowUpRight, Download, FileText, ChevronDown, AlertCircle, IndianRupee
 } from 'lucide-react';
 
 const AttendanceMetric = ({ label, value, trend, trendType, icon: Icon, color }) => (
@@ -267,10 +267,12 @@ const Dashboard = () => {
       <div className="grid grid-cols-12 gap-8 mb-12">
         <div className="col-span-8 card p-8 flex flex-col">
           <div className="flex justify-between items-center mb-8">
-            <h3 className="font-black text-xs uppercase tracking-wider text-slate-700">Fees Collection</h3>
+            <Link to="/fees" className="hover:opacity-70 transition-opacity">
+              <h3 className="font-black text-xs uppercase tracking-wider text-slate-700">Fees Collection</h3>
+            </Link>
             <div className="flex items-center gap-4 text-[9px] font-black uppercase text-slate-300 tracking-tighter">
-              <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-slate-100"></div> Total: ${stats.fees.target.toLocaleString()}</div>
-              <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-indigo-600"></div> Collected: ${stats.fees.collected.toLocaleString()}</div>
+              <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-slate-100"></div> Total: ₹{stats.fees.target.toLocaleString('en-IN')}</div>
+              <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-indigo-600"></div> Collected: ₹{stats.fees.collected.toLocaleString('en-IN')}</div>
               <div className="px-2 py-1 bg-slate-50 rounded-lg text-slate-500 border border-slate-100 ml-2 flex items-center gap-1.5"><Calendar size={12} /> Last 8 Quater</div>
             </div>
           </div>
@@ -279,7 +281,7 @@ const Dashboard = () => {
             <div>
               <div className="flex justify-between items-end mb-3">
                 <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Revenue Realized</span>
-                <span className="text-xl font-black text-slate-800">${stats.fees.collected.toLocaleString()}</span>
+                <span className="text-xl font-black text-slate-800">₹{stats.fees.collected.toLocaleString('en-IN')}</span>
               </div>
               <div className="h-4 w-full bg-slate-50 rounded-full overflow-hidden p-1 border border-slate-100">
                 <div 
@@ -296,7 +298,7 @@ const Dashboard = () => {
               </div>
               <div>
                 <span className="text-[9px] font-black text-slate-300 uppercase tracking-widest block mb-1">Outstanding Balance</span>
-                <span className="text-lg font-black text-orange-500">${stats.fees.pending.toLocaleString()}</span>
+                <span className="text-lg font-black text-orange-500">₹{stats.fees.pending.toLocaleString('en-IN')}</span>
               </div>
             </div>
           </div>
