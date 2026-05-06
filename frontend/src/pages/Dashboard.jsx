@@ -7,6 +7,23 @@ import {
   ArrowUpRight, Download, FileText, ChevronDown, AlertCircle
 } from 'lucide-react';
 
+const AttendanceMetric = ({ label, value, trend, trendType, icon: Icon, color }) => (
+  <div className="bg-white p-5 rounded-3xl border border-slate-100 shadow-sm flex items-center justify-between group hover:shadow-md transition-all">
+    <div className="flex items-center gap-4">
+      <div className={`p-3 rounded-2xl ${color} bg-opacity-10`}>
+        <Icon size={20} className={color.replace('bg-', 'text-').split(' ')[0]} />
+      </div>
+      <div>
+        <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">{label}</p>
+        <h3 className="text-xl font-black text-slate-800 mt-0.5">{value}</h3>
+      </div>
+    </div>
+    <div className={`px-2 py-1 rounded-lg text-[9px] font-black ${trendType === 'up' ? 'bg-emerald-50 text-emerald-600' : trendType === 'down' ? 'bg-rose-50 text-rose-600' : 'bg-slate-50 text-slate-400'}`}>
+      {trendType === 'up' ? '↑' : trendType === 'down' ? '↓' : ''} {trend}
+    </div>
+  </div>
+);
+
 const StatCard = ({ title, value, active, inactive, icon: Icon, color, to }) => (
   <div className="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm relative overflow-hidden group">
     <div className="flex justify-between items-start mb-3">
@@ -69,7 +86,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="p-10 max-w-[1600px] mx-auto space-y-10 animate-in fade-in duration-700">
       {/* Header & Actions */}
       <div className="flex items-center justify-between">
         <div>
@@ -105,8 +122,44 @@ const Dashboard = () => {
         </div>
       </div>
 
+      {/* Attendance Summary Bar */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <AttendanceMetric 
+          label="Present Today" 
+          value={stats.attendance[activeTab].present} 
+          trend="+12%" 
+          trendType="up" 
+          icon={CheckCircle2} 
+          color="bg-indigo-500" 
+        />
+        <AttendanceMetric 
+          label="Absent" 
+          value={stats.attendance[activeTab].absent} 
+          trend="0%" 
+          trendType="neutral" 
+          icon={AlertCircle} 
+          color="bg-rose-500" 
+        />
+        <AttendanceMetric 
+          label="Late Arrival" 
+          value={stats.attendance[activeTab].late} 
+          trend="-2%" 
+          trendType="down" 
+          icon={Clock} 
+          color="bg-orange-500" 
+        />
+        <AttendanceMetric 
+          label="Medical Leave" 
+          value={stats.attendance[activeTab].medical || 0} 
+          trend="+1" 
+          trendType="up" 
+          icon={Plus} 
+          color="bg-emerald-500" 
+        />
+      </div>
+
       {/* Stats Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <StatCard title="Total Students" value={stats.students.total} active={stats.students.active} inactive={stats.students.inactive} icon={GraduationCap} color="bg-orange-500 text-orange-500" to="/students" />
         <StatCard title="Total Teachers" value={stats.teachers.total} active={stats.teachers.active} inactive={stats.teachers.inactive} icon={UserSquare2} color="bg-blue-500 text-blue-500" to="/teachers" />
         <StatCard title="Total Staff" value={stats.staff.total} active={stats.staff.active} inactive={stats.staff.inactive} icon={Users} color="bg-red-500 text-red-500" to="/students" />
@@ -114,7 +167,7 @@ const Dashboard = () => {
       </div>
 
       {/* Main Grid Row 1 */}
-      <div className="grid grid-cols-12 gap-5">
+      <div className="grid grid-cols-12 gap-8">
         <div className="col-span-4 card p-5">
           <div className="flex justify-between items-center mb-5"><h3 className="font-black text-xs uppercase tracking-wider text-slate-700">Schedules</h3><button className="text-[10px] font-black text-indigo-600 border border-indigo-100 px-2.5 py-1 rounded-lg hover:bg-indigo-50">+ Add New</button></div>
           <div className="mb-5 bg-slate-50 p-3 rounded-2xl">
@@ -165,7 +218,9 @@ const Dashboard = () => {
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-3xl font-black text-slate-800 leading-none">{stats.attendance[activeTab].present}</span>
+              <span className="text-3xl font-black text-slate-800 leading-none">
+                {stats.attendance[activeTab].present || 0}
+              </span>
               <span className="text-[9px] font-black text-slate-300 uppercase tracking-tighter mt-0.5">Present</span>
             </div>
             <div className="absolute top-0 right-2 w-8 h-8 bg-indigo-50 rounded-full border-4 border-white shadow-sm flex items-center justify-center"><CheckCircle2 size={12} className="text-indigo-600" /></div>
@@ -209,8 +264,8 @@ const Dashboard = () => {
       </div>
 
       {/* Final Row: Fees & Performers */}
-      <div className="grid grid-cols-12 gap-5">
-        <div className="col-span-8 card p-5 flex flex-col">
+      <div className="grid grid-cols-12 gap-8 mb-12">
+        <div className="col-span-8 card p-8 flex flex-col">
           <div className="flex justify-between items-center mb-8">
             <h3 className="font-black text-xs uppercase tracking-wider text-slate-700">Fees Collection</h3>
             <div className="flex items-center gap-4 text-[9px] font-black uppercase text-slate-300 tracking-tighter">
@@ -265,7 +320,7 @@ const Dashboard = () => {
         </div>
       </div>
       {/* Row 4: Notice Board & Lists */}
-      <div className="grid grid-cols-12 gap-5">
+      <div className="grid grid-cols-12 gap-8">
         <div className="col-span-4 card p-5">
           <div className="flex justify-between items-center mb-6"><h3 className="font-black text-xs uppercase tracking-wider text-slate-700">Notice Board</h3><div className="flex gap-2"><button className="text-indigo-600 text-[9px] font-black tracking-widest">+ NEW</button><button className="text-slate-300 text-[9px] font-black tracking-widest uppercase">View All</button></div></div>
           <div className="space-y-4">

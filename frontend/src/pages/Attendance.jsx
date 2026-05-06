@@ -8,34 +8,30 @@ import {
 } from 'lucide-react';
 
 const Attendance = () => {
-  const [attendance, setAttendance] = useState([]);
-  const [students, setStudents] = useState([]);
+  const [logs, setLogs] = useState([]);
+  const [stats, setStats] = useState({ present: 0, absent: 0, late: 0, medical: 0 });
   const [loading, setLoading] = useState(true);
   const [showMarkModal, setShowMarkModal] = useState(false);
+  const [students, setStudents] = useState([]);
   const [formData, setFormData] = useState({ student_id: '', status: 'Present' });
-  const [stats, setStats] = useState({ present: 3610, absent: 1, late: 1, medical: 15 });
 
   useEffect(() => {
-    fetchAttendance();
-    fetchStudents();
+    fetchData();
   }, []);
 
-  const fetchStudents = async () => {
+  const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/students/');
-      setStudents(response.data);
-    } catch (error) {
-      console.error('Error fetching students:', error);
-    }
-  };
-
-  const fetchAttendance = async () => {
-    try {
-      const response = await axios.get('http://localhost:8000/attendance/');
-      setAttendance(response.data);
+      const [logsRes, statsRes, studentsRes] = await Promise.all([
+        axios.get('http://localhost:8000/attendance/'),
+        axios.get('http://localhost:8000/dashboard/stats'),
+        axios.get('http://localhost:8000/students/')
+      ]);
+      setLogs(logsRes.data);
+      setStats(statsRes.data.attendance.students);
+      setStudents(studentsRes.data);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching attendance:', error);
+      console.error('Error fetching data:', error);
       setLoading(false);
     }
   };
@@ -45,21 +41,19 @@ const Attendance = () => {
     try {
       await axios.post('http://localhost:8000/attendance/', formData);
       setShowMarkModal(false);
-      fetchAttendance();
-      // Optionally update local stats here too
+      fetchData();
     } catch (error) {
       alert('Error marking attendance.');
     }
   };
 
   const exportToExcel = () => {
-    if (attendance.length === 0) {
+    if (logs.length === 0) {
       alert("No data available to export.");
       return;
     }
 
-    // Prepare data for Excel
-    const data = attendance.map(log => ({
+    const data = logs.map(log => ({
       "Student Name": log.student_name,
       "Grade": log.grade,
       "Section": log.section,
@@ -67,24 +61,16 @@ const Attendance = () => {
       "Attendance Status": log.status
     }));
 
-    // Create Worksheet
     const worksheet = XLSX.utils.json_to_sheet(data);
     
-    // Set Column Widths
     const wscols = [
-      {wch: 25}, // Name
-      {wch: 10}, // Grade
-      {wch: 10}, // Section
-      {wch: 15}, // Time
-      {wch: 15}  // Status
+      {wch: 25}, {wch: 10}, {wch: 10}, {wch: 15}, {wch: 15}
     ];
     worksheet['!cols'] = wscols;
 
-    // Create Workbook
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Daily Attendance");
 
-    // Generate and Download File
     const dateStr = new Date().toLocaleDateString().replace(/\//g, '-');
     XLSX.writeFile(workbook, `Attendance_Report_${dateStr}.xlsx`);
   };
@@ -122,9 +108,9 @@ const Attendance = () => {
       </div>
 
       {/* Attendance Stats Dashboard */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
-        <AttendanceStat title="Present Today" value={stats.present} change="+12%" icon={CheckCircle2} color="bg-green-500" />
-        <AttendanceStat title="Absent" value={stats.absent} change="0%" icon={AlertCircle} color="bg-red-500" />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <AttendanceStat title="Present Today" value={stats.present} change="+12%" icon={CheckCircle2} color="bg-indigo-500" />
+        <AttendanceStat title="Absent" value={stats.absent} change="0%" icon={AlertCircle} color="bg-rose-500" />
         <AttendanceStat title="Late Arrival" value={stats.late} change="-2%" icon={Clock} color="bg-orange-500" />
         <AttendanceStat title="Medical Leave" value={stats.medical} change="+1" icon={Users} color="bg-blue-500" />
       </div>
@@ -160,7 +146,7 @@ const Attendance = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-50">
-            {attendance.map((log) => (
+            {logs.map((log) => (
               <tr key={log.id} className="hover:bg-slate-50/50 transition-all group">
                 <td className="px-8 py-5">
                   <div className="flex items-center gap-4">
@@ -192,7 +178,7 @@ const Attendance = () => {
                 </td>
               </tr>
             ))}
-            {attendance.length === 0 && !loading && (
+            {logs.length === 0 && !loading && (
               <tr>
                 <td colSpan="5" className="py-20 text-center text-slate-300 font-bold text-xs uppercase tracking-widest">
                   No attendance records found for this date.

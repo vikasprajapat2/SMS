@@ -3,12 +3,12 @@ from faker import Faker
 from sqlalchemy.orm import Session
 from .connection import SessionLocal, engine, Base
 from ..models.sms_models import Student, Teacher, Staff, Notice, Attendance, Fee, Subject
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
 
 fake = Faker()
 
 def bulk_seed():
-    print("Initializing Bulk Seeding (500+ Students, 20+ Teachers)...")
+    print("Initializing Comprehensive Bulk Seeding...")
     Base.metadata.drop_all(bind=engine)
     Base.metadata.create_all(bind=engine)
     
@@ -30,7 +30,8 @@ def bulk_seed():
             ("Economics", "ECON111", "Humanities"),
             ("Business Studies", "BUS112", "Commerce"),
             ("Accountancy", "ACC113", "Commerce"),
-            ("Sociology", "SOC114", "Humanities")
+            ("Sociology", "SOC114", "Humanities"),
+            ("Civics", "CIV115", "Humanities")
         ]
         for title, code, dept in subjects_list:
             sub = Subject(title=title, code=code, department=dept, is_active=True)
@@ -38,13 +39,12 @@ def bulk_seed():
         print("15 Subjects seeded.")
 
         # 1. Seed Teachers (25)
-        subjects = ["Mathematics", "Physics", "Chemistry", "Biology", "English", "History", "Geography", "Computer Science", "Arts", "Physical Education"]
         teachers = []
         for _ in range(25):
             teacher = Teacher(
                 full_name=fake.name(),
                 email=fake.unique.email(),
-                subject=random.choice(subjects),
+                subject=random.choice([s[0] for s in subjects_list]),
                 is_active=True,
                 join_date=fake.date_between(start_date='-5y', end_date='today')
             )
@@ -65,25 +65,38 @@ def bulk_seed():
                 roll_number=str(1000 + i),
                 phone=fake.phone_number()[:15],
                 address=fake.address().replace("\n", ", "),
-                is_active=random.choice([True, True, True, False]), # 75% active
+                is_active=True,
                 admission_date=fake.date_between(start_date='-3y', end_date='today')
             )
             db.add(student)
+            db.flush() # Get ID
             students.append(student)
         print("520 Students seeded.")
 
-        # 3. Seed Staff (10)
-        roles = ["Admin", "Librarian", "Accountant", "Security", "Receptionist"]
-        for _ in range(10):
-            staff = Staff(
-                full_name=fake.name(),
-                role=random.choice(roles),
-                is_active=True
+        # 3. Seed Fees (500 Records)
+        for i in range(500):
+            fee = Fee(
+                student_id=students[i % 520].id,
+                amount=random.choice([1500, 2000, 2500, 3000, 5000]),
+                term=random.choice(["Term 1", "Term 2", "Annual"]),
+                paid_date=datetime.utcnow() - timedelta(days=random.randint(0, 30)),
+                status=random.choice(["Paid", "Paid", "Paid", "Pending"]) # 75% Paid
             )
-            db.add(staff)
-        print("10 Staff members seeded.")
+            db.add(fee)
+        print("500 Fee records seeded.")
 
-        # 4. Seed Notices (5)
+        # 4. Seed Attendance (Today for everyone)
+        today = date.today()
+        for student in students:
+            att = Attendance(
+                student_id=student.id,
+                date=datetime.combine(today, datetime.min.time()),
+                status=random.choice(["Present", "Present", "Present", "Present", "Absent", "Late", "Medical"])
+            )
+            db.add(att)
+        print(f"Attendance for all 520 students seeded for {today}.")
+
+        # 5. Seed Notices
         notices = [
             ("Summer Vacation", "School will remain closed from June 1st to June 30th."),
             ("Annual Sports Meet", "Register your names for the upcoming sports meet by Friday."),
@@ -94,21 +107,9 @@ def bulk_seed():
         for title, content in notices:
             notice = Notice(title=title, content=content, created_at=datetime.utcnow())
             db.add(notice)
-        print("5 Notices seeded.")
-
-        # 5. Seed some Attendance records (Last 7 days for 100 random students)
-        for student in random.sample(students, 100):
-            for day in range(7):
-                att = Attendance(
-                    student_id=student.id,
-                    date=datetime.utcnow() - timedelta(days=day),
-                    status=random.choice(["Present", "Present", "Present", "Absent", "Late"])
-                )
-                db.add(att)
-        print("Sample Attendance logs seeded.")
 
         db.commit()
-        print("Bulk Seeding Complete! System is now populated with real-world scale data.")
+        print("Bulk Seeding Complete! System is now fully populated with consistent data.")
 
     except Exception as e:
         print(f"Error during seeding: {e}")
