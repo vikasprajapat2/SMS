@@ -1,0 +1,21 @@
+# Dependencies
+node_modules/
+backend/venv/
+__pycache__/
+*.pyc
+
+# Database & Sensitive
+*.db
+backend/.env
+frontend/.env
+.DS_Store
+
+# Build outputs
+dist/
+build/
+.next/
+.expo/
+
+# IDE
+.vscode/
+.idea/

@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f1f5f9;
+  color: #1e293b;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+.sidebar-link {
+  @apply flex items-center justify-center w-9 h-9 rounded-xl text-slate-400 transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-600 cursor-pointer;
+}
+.sidebar-link.active {
+  @apply bg-indigo-600 text-white shadow-lg;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.4);
+}
+
+.card {
+  @apply bg-white rounded-2xl border border-slate-100 shadow-sm;
+}
+
+.btn-primary {
+  @apply bg-indigo-600 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-lg hover:bg-indigo-700 transition-all flex items-center gap-2;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+}
+
+.btn-cyan {
+  @apply bg-cyan-400 text-white px-4 py-2 rounded-xl text-xs font-semibold hover:bg-cyan-500 transition-all;
+}
+
+.stat-badge {
+  @apply inline-flex items-center gap-1 text-[10px] font-semibold;
+}
+
+.tag-emergency {
+  @apply px-1.5 py-0.5 bg-red-50 text-red-500 rounded text-[9px] font-bold border border-red-100;
+}
+.tag-casual {
+  @apply px-1.5 py-0.5 bg-orange-50 text-orange-500 rounded text-[9px] font-bold border border-orange-100;
+}
+.tag-medical {
+  @apply px-1.5 py-0.5 bg-blue-50 text-blue-500 rounded text-[9px] font-bold border border-blue-100;
+}
