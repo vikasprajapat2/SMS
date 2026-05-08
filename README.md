@@ -61,9 +61,9 @@ A premium, high-fidelity School Management System (SMS) built with a focus on mo
 
 ## 📸 Premium UI Preview
 
-*   **Dashboard**: ![Dashboard Preview](https://api.dicebear.com/7.x/shapes/svg?seed=dashboard)
-*   **Calendar**: ![Calendar Preview](https://api.dicebear.com/7.x/shapes/svg?seed=calendar)
-*   **Exam Timetable**: ![Exams Preview](https://api.dicebear.com/7.x/shapes/svg?seed=exams)
+*   **Dashboard**:
+*   **Calendar**: 
+*   **Exam Timetable**: 
 
 ## 🤝 Contributing
 
