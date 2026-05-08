@@ -1,64 +1,73 @@
-# 🎓 SMS - Modern Student Management System
+# 🎓 SMS - Modern Academic Management System
 
-A high-fidelity, full-stack Administrative Dashboard for modern educational institutions. Built with a focus on **premium aesthetics**, **real-time analytics**, and **scalable architecture**.
+A premium, high-fidelity School Management System (SMS) built with a focus on modern aesthetics, real-time scheduling, and enterprise-grade administrative workflows.
 
-![Dashboard Preview](https://via.placeholder.com/1200x600/6366f1/ffffff?text=SMS+Admin+Dashboard+Preview)
+## ✨ Key Features
 
-## 🚀 Key Features
+### 🏢 Admin Dashboard
+*   **Dynamic Command Center**: Real-time stats for students, teachers, staff, and finances.
+*   **Interactive Mini-Calendar**: Automated month/day rendering with event highlighting.
+*   **Quick Actions**: Streamlined navigation to all core modules.
+*   **Responsive Navbar**: Smart multi-breakpoint header that adapts to any screen resolution.
 
-*   **📊 Dynamic Command Center**: Real-time tracking of Students (500+), Teachers, and Staff with live attendance and fee collection widgets.
-*   **🎓 Student Management**: Dedicated high-fidelity registration flow, automated roll number assignment, and detailed student profiles.
-*   **👨‍🏫 Teacher Faculty**: Management of teacher profiles, subjects, and specialized departments.
-*   **✅ Attendance System**: Daily presence tracking with status toggles (Present, Absent, Late, Medical) and professional Excel/CSV export capabilities.
-*   **📖 Academic Curriculum**: Full subject management module with department categorization.
-*   **💰 Financial Tracking**: Real-time fee collection visualization with progress monitoring.
+### 📅 Academic Scheduling & Calendar
+*   **Multi-View Calendar**: Support for Month, Week, and Day views with fluid transitions.
+*   **Event Management**: Categorized scheduling (Exams, Holidays, Meetings) with visual tagging.
+*   **Upcoming Events**: Dynamic sidebar for quick reference of pending activities.
 
-## 🛠️ Tech Stack
+### 📝 Exam Management
+*   **Exam Timetable**: High-fidelity scheduling interface for academic terms.
+*   **Automated Metrics**: Real-time calculation of total marks, exam periods, and workload.
+*   **Publishing Workflow**: Integrated modal for creating and instant-publishing exam schedules.
 
-### Backend
-- **Framework**: FastAPI (Python)
-- **Database**: SQLite / SQLAlchemy (ORM)
-- **Data Generation**: Faker (for large-scale stress testing)
+### 💰 Financial Management
+*   **Fees Collection**: Data-rich analytics for revenue realization and outstanding arrears.
+*   **Payment History**: Clean, sortable logs for all student transactions.
 
-### Frontend
-- **Framework**: React.js
-- **Styling**: Tailwind CSS
-- **Icons**: Lucide React
-- **Data Visualization**: Custom SVG Charts & Progress Components
+## 🛠️ Technology Stack
 
-## ⚙️ Quick Start
+*   **Frontend**: React.js, Tailwind CSS, Lucide-React Icons.
+*   **Backend**: Python, FastAPI/Uvicorn.
+*   **State Management**: React Hooks (useState, useEffect).
+*   **Design**: Glassmorphism, Modern Indigo-Slate tokens, Responsive Grid layouts.
 
-### 1. Clone the repository
-```bash
-git clone https://github.com/vikasprajapat2/SMS.git
-cd SMS
-```
+## 🚀 Getting Started
 
-### 2. Setup Backend
-```bash
-cd backend
-python -m venv venv
-# Activate venv: .\venv\Scripts\activate (Windows) or source venv/bin/activate (Mac/Linux)
-pip install -r requirements.txt
-python -m app.database.bulk_seed  # Optional: Seed 500+ records
-python -m uvicorn app.main:app --reload
-```
+### Prerequisites
+*   Node.js (v18+)
+*   Python (v3.10+)
 
-### 3. Setup Frontend
-```bash
-cd ../frontend
-npm install
-npm run dev
-```
+### Installation
 
-## 📸 Screenshots
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/vikasprajapat2/SMS.git
+   cd SMS
+   ```
 
-*   **Dashboard**: A premium hub for all school activities.
-*   **Attendance**: Real-time presence logs with status highlights.
-*   **Admissions**: Multi-section, high-fidelity registration forms.
+2. **Backend Setup**
+   ```bash
+   cd backend
+   pip install -r requirements.txt
+   python -m uvicorn app.main:app --reload
+   ```
 
-## 📄 License
-Distributed under the MIT License. See `LICENSE` for more information.
+3. **Frontend Setup**
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
+
+## 📸 Premium UI Preview
+
+*   **Dashboard**: ![Dashboard Preview](https://api.dicebear.com/7.x/shapes/svg?seed=dashboard)
+*   **Calendar**: ![Calendar Preview](https://api.dicebear.com/7.x/shapes/svg?seed=calendar)
+*   **Exam Timetable**: ![Exams Preview](https://api.dicebear.com/7.x/shapes/svg?seed=exams)
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ---
 Built with ❤️ for Modern Education.
