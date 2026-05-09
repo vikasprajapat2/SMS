@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { Eye, EyeOff, GraduationCap, Lock, Mail, ArrowRight, Shield } from "lucide-react";
 
 const Login = ({ onLogin }) => {
@@ -11,6 +11,7 @@ const Login = ({ onLogin }) => {
     { id: "admin", label: "Admin", icon: "🛡️" },
     { id: "teacher", label: "Teacher", icon: "👩‍🏫" },
     { id: "student", label: "Student", icon: "🎓" },
+    { id: "parent", label: "Parent", icon: "👨‍👩‍👧" },
   ];
 
   const handleSubmit = async (e) => {
@@ -173,7 +174,11 @@ const Login = ({ onLogin }) => {
             <div className="mt-6 p-4 bg-white/5 rounded-2xl border border-white/10">
               <p className="text-white/30 text-[10px] font-bold uppercase tracking-wider mb-2">Demo Credentials</p>
               <div className="space-y-1">
-                {[{r:"Admin",e:"admin@school.com",p:"admin123"},{r:"Teacher",e:"teacher@school.com",p:"teacher123"}].map((d,i)=>(
+                {[
+                  {r:"Admin",e:"admin@school.com",p:"admin123"},
+                  {r:"Teacher",e:"teacher@school.com",p:"teacher123"},
+                  {r:"Parent",e:"parent@school.com",p:"parent123"}
+                ].map((d,i)=>(
                   <button key={i} type="button"
                     onClick={()=>setForm({email:d.e,password:d.p,role:d.r.toLowerCase()})}
                     className="w-full flex justify-between items-center text-[10px] px-3 py-1.5 rounded-xl hover:bg-white/5 transition-all group"

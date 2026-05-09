@@ -10,12 +10,14 @@ import Fees from "./pages/Fees";
 import CalendarPage from "./pages/Calendar";
 import ExamTimetable from "./pages/ExamTimetable";
 import TeacherDashboard from "./pages/TeacherDashboard";
+import ParentDashboard from "./pages/ParentDashboard";
 import Login from "./pages/Login";
 import { 
   LayoutDashboard, GraduationCap, UserSquare2, Bell, Search, 
   UserCheck, BookOpen, CreditCard, LogOut, Calendar, 
   FileText, ChevronDown, Menu, X, Settings, HelpCircle, User,
-  ChevronLeft, ChevronRight, PanelLeftClose, PanelLeft
+  ChevronLeft, ChevronRight, PanelLeftClose, PanelLeft,
+  Home, IndianRupee, ClipboardList
 } from "lucide-react";
 import "./index.css";
 
@@ -113,7 +115,18 @@ const Sidebar = ({ user, onLogout, isOpen, onClose, collapsed }) => {
     { to: "/my-reports", icon: FileText, label: "Reports" },
   ];
 
-  const links = user?.role === "admin" ? adminLinks : teacherLinks;
+  const parentLinks = [
+    { to: "/", icon: Home, label: "Dashboard" },
+    { to: "/attendance", icon: UserCheck, label: "Attendance" },
+    { to: "/assignments", icon: ClipboardList, label: "Assignments" },
+    { to: "/fees", icon: IndianRupee, label: "Fee Payments" },
+    { to: "/reports", icon: FileText, label: "Reports" },
+    { to: "/calendar", icon: Calendar, label: "Calendar" },
+  ];
+
+  const links = user?.role === "admin" ? adminLinks
+    : user?.role === "parent" ? parentLinks
+    : teacherLinks;
 
   return (
     <>
@@ -197,7 +210,7 @@ const Sidebar = ({ user, onLogout, isOpen, onClose, collapsed }) => {
   );
 };
 
-const roleNames = { admin: "Mr. Herald", teacher: "Ms. Teena", student: "Student" };
+const roleNames = { admin: "Mr. Herald", teacher: "Ms. Teena", student: "Student", parent: "Vikas Prajapat" };
 
 function App() {
   const [user, setUser] = useState(null);
@@ -251,6 +264,15 @@ function App() {
                   <Route path="/fees" element={<Fees />} />
                   <Route path="/calendar" element={<CalendarPage />} />
                   <Route path="/exam-timetable" element={<ExamTimetable />} />
+                </>
+              ) : user.role === "parent" ? (
+                <>
+                  <Route path="/" element={<ParentDashboard />} />
+                  <Route path="/attendance" element={<ParentDashboard />} />
+                  <Route path="/assignments" element={<ParentDashboard />} />
+                  <Route path="/fees" element={<ParentDashboard />} />
+                  <Route path="/reports" element={<ParentDashboard />} />
+                  <Route path="/calendar" element={<ParentDashboard />} />
                 </>
               ) : (
                 <>
