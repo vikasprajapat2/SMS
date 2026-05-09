@@ -1,41 +1,72 @@
-# 🎓 SMS - Modern Academic Management System
+# 🎓 SMS — Modern School Management System
 
-A premium, high-fidelity School Management System (SMS) built with a focus on modern aesthetics, real-time scheduling, and enterprise-grade administrative workflows.
+A premium, high-fidelity School Management System built with React + FastAPI. Designed with enterprise-grade aesthetics, real-time scheduling, and fully interactive administrative workflows.
 
-## ✨ Key Features
+---
+
+## ✨ Features
 
 ### 🏢 Admin Dashboard
-*   **Dynamic Command Center**: Real-time stats for students, teachers, staff, and finances.
-*   **Interactive Mini-Calendar**: Automated month/day rendering with event highlighting.
-*   **Quick Actions**: Streamlined navigation to all core modules.
-*   **Responsive Navbar**: Smart multi-breakpoint header that adapts to any screen resolution.
+- Real-time stats: students, teachers, staff, finances
+- Interactive mini-calendar with event highlighting
+- Quick Actions panel and activity feed
+- Responsive collapsible left sidebar navigation
 
-### 📅 Academic Scheduling & Calendar
-*   **Multi-View Calendar**: Support for Month, Week, and Day views with fluid transitions.
-*   **Event Management**: Categorized scheduling (Exams, Holidays, Meetings) with visual tagging.
-*   **Upcoming Events**: Dynamic sidebar for quick reference of pending activities.
+### 👩‍🎓 Student Management
+- Card + table hybrid view with avatar support
+- **Click any student** → opens a rich Profile Modal with:
+  - Personal details, class & section
+  - Attendance %, GPA, Fees status
+  - Parent / guardian information
+  - Academic records and downloadable documents
 
-### 📝 Exam Management
-*   **Exam Timetable**: High-fidelity scheduling interface for academic terms.
-*   **Automated Metrics**: Real-time calculation of total marks, exam periods, and workload.
-*   **Publishing Workflow**: Integrated modal for creating and instant-publishing exam schedules.
+### 👨‍🏫 Teacher Management
+- Faculty card grid with subject-colored badges
+- **Click any teacher** → opens a detailed Profile Modal with:
+  - Subject expertise & department assignment
+  - Weekly class schedule (Mon–Thu)
+  - Performance metrics (Pass Rate, Attendance, Parent Satisfaction)
+  - Academic qualifications (M.Sc., B.Ed.)
+  - Send Message & Edit Profile actions
 
-### 💰 Financial Management
-*   **Fees Collection**: Data-rich analytics for revenue realization and outstanding arrears.
-*   **Payment History**: Clean, sortable logs for all student transactions.
+### 📅 Academic Calendar
+- Month / Week / Day views with fluid transitions
+- Event creation modal with category tagging
+- Upcoming Events sidebar panel
 
-## 🛠️ Technology Stack
+### 📝 Exam Timetable
+- Full scheduling interface per academic term
+- Create New Schedule modal with auto-stats
+- Total exams, marks and period calculations
 
-*   **Frontend**: React.js, Tailwind CSS, Lucide-React Icons.
-*   **Backend**: Python, FastAPI/Uvicorn.
-*   **State Management**: React Hooks (useState, useEffect).
-*   **Design**: Glassmorphism, Modern Indigo-Slate tokens, Responsive Grid layouts.
+### 💰 Fee Management
+- Revenue analytics and outstanding arrears tracking
+- Sortable payment history per student
+
+### 🧭 Navigation (Sidebar)
+- Persistent left sidebar with collapsible icon-only mode
+- Responsive: auto-hides on mobile with burger menu toggle
+- Smooth slide animations and active state indicators
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer      | Technology                          |
+|------------|-------------------------------------|
+| Frontend   | React 18, Tailwind CSS, Lucide-React |
+| Backend    | Python 3.13, FastAPI, Uvicorn        |
+| Database   | PostgreSQL (via SQLAlchemy ORM)      |
+| Avatars    | DiceBear API (auto-generated)        |
+| Design     | Glassmorphism, Indigo-Slate tokens   |
+
+---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-*   Node.js (v18+)
-*   Python (v3.10+)
+- Node.js v18+
+- Python 3.10+
 
 ### Installation
 
@@ -59,15 +90,46 @@ A premium, high-fidelity School Management System (SMS) built with a focus on mo
    npm run dev
    ```
 
-## 📸 Premium UI Preview
-
-*   **Dashboard**:
-*   **Calendar**: 
-*   **Exam Timetable**: 
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
+4. **Seed the Database** *(optional)*
+   ```bash
+   cd backend
+   python -m app.database.seed
+   ```
 
 ---
+
+## 📸 Screenshots
+
+| Module | Preview |
+|--------|---------|
+| **Admin Dashboard** | Full stats, mini calendar, quick actions |
+| **Student Profile** | Avatar, GPA, fees, parent details |
+| **Teacher Profile** | Schedule, performance bars, qualifications |
+| **Academic Calendar** | Month/Week/Day event views |
+| **Exam Timetable** | Schedule builder with auto-stats |
+
+---
+
+## 📁 Project Structure
+
+```
+SMS/
+├── backend/
+│   ├── app/
+│   │   ├── main.py
+│   │   ├── routes/        # student, teacher, fees, attendance
+│   │   ├── models/        # SQLAlchemy ORM models
+│   │   └── database/      # connection, seed scripts
+│   └── requirements.txt
+└── frontend/
+    ├── src/
+    │   ├── pages/          # Dashboard, Students, Teachers, Fees, Calendar…
+    │   ├── services/       # API service layer (axios)
+    │   ├── App.jsx         # Router + Sidebar + Header layout
+    │   └── index.css       # Design system tokens
+    └── index.html
+```
+
+---
+
 Built with ❤️ for Modern Education.
