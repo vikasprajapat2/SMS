@@ -9,6 +9,7 @@ import Subjects from "./pages/Subjects";
 import Fees from "./pages/Fees";
 import CalendarPage from "./pages/Calendar";
 import ExamTimetable from "./pages/ExamTimetable";
+import LectureTimetable from "./pages/LectureTimetable";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import ParentDashboard from "./pages/ParentDashboard";
 import Login from "./pages/Login";
@@ -17,7 +18,7 @@ import {
   UserCheck, BookOpen, CreditCard, LogOut, Calendar, 
   FileText, ChevronDown, Menu, X, Settings, HelpCircle, User,
   ChevronLeft, ChevronRight, PanelLeftClose, PanelLeft,
-  Home, IndianRupee, ClipboardList
+  Home, IndianRupee, ClipboardList, CalendarDays
 } from "lucide-react";
 import "./index.css";
 
@@ -104,7 +105,8 @@ const Sidebar = ({ user, onLogout, isOpen, onClose, collapsed }) => {
     { to: "/subjects", icon: BookOpen, label: "Subjects" },
     { to: "/fees", icon: CreditCard, label: "Fees" },
     { to: "/calendar", icon: Calendar, label: "Calendar" },
-    { to: "/exam-timetable", icon: FileText, label: "Exams" },
+    { to: "/exam-timetable",     icon: FileText,    label: "Exams" },
+    { to: "/lecture-timetable",  icon: CalendarDays, label: "Lecture Schedule" },
   ];
 
   const teacherLinks = [
@@ -263,7 +265,8 @@ function App() {
                   <Route path="/subjects" element={<Subjects />} />
                   <Route path="/fees" element={<Fees />} />
                   <Route path="/calendar" element={<CalendarPage />} />
-                  <Route path="/exam-timetable" element={<ExamTimetable />} />
+                  <Route path="/exam-timetable"    element={<ExamTimetable />} />
+                  <Route path="/lecture-timetable" element={<LectureTimetable />} />
                 </>
               ) : user.role === "parent" ? (
                 <>

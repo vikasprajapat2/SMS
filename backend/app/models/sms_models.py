@@ -78,3 +78,35 @@ class Subject(Base):
     code = Column(String, unique=True, index=True)
     department = Column(String)
     is_active = Column(Boolean, default=True)
+
+class ExamTimetable(Base):
+    __tablename__ = "exam_timetables"
+    id = Column(Integer, primary_key=True, index=True)
+    class_name = Column(String, index=True)       # e.g. "10th - A"
+    term = Column(String, index=True)              # e.g. "Annual Examination"
+    subject = Column(String)
+    date = Column(String)                          # ISO date string YYYY-MM-DD
+    start_time = Column(String)                    # e.g. "09:00"
+    end_time = Column(String)                      # e.g. "12:00"
+    marks = Column(Integer)
+    room = Column(String)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class LectureTimetable(Base):
+    __tablename__ = "lecture_timetables"
+    id = Column(Integer, primary_key=True, index=True)
+    class_name = Column(String, index=True)        # e.g. "10th - A"
+    day = Column(String)                           # e.g. "Monday"
+    period = Column(Integer)                       # 1-8
+    subject = Column(String)
+    teacher = Column(String, nullable=True)
+    room = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+class ClassConfig(Base):
+    __tablename__ = "class_configs"
+    id         = Column(Integer, primary_key=True, index=True)
+    name       = Column(String, unique=True, index=True)   # e.g. "10th - A"
+    group_label= Column(String, default="Custom")          # e.g. "Secondary (9-10)"
+    sort_order = Column(Integer, default=999)
+    created_at = Column(DateTime, default=datetime.utcnow)

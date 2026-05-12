@@ -23,3 +23,26 @@ async def create_student(student_data: dict, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(student)
     return student
+
+@router.put("/{student_id}")
+async def update_student(student_id: int, student_data: dict, db: Session = Depends(get_db)):
+    student = db.query(Student).filter(Student.id == student_id).first()
+    if not student:
+        raise HTTPException(status_code=404, detail="Student not found")
+    
+    for key, value in student_data.items():
+        setattr(student, key, value)
+    
+    db.commit()
+    db.refresh(student)
+    return student
+
+@router.delete("/{student_id}")
+async def delete_student(student_id: int, db: Session = Depends(get_db)):
+    student = db.query(Student).filter(Student.id == student_id).first()
+    if not student:
+        raise HTTPException(status_code=404, detail="Student not found")
+    
+    db.delete(student)
+    db.commit()
+    return {"message": "Student deleted successfully"}

@@ -28,4 +28,31 @@ export const studentService = {
   create: (data) => api.post('/students', data),
 };
 
+// ── Class Config ────────────────────────────────────────────────────────────
+export const classService = {
+  getAll:  ()         => api.get('/classes/'),
+  create:  (data)     => api.post('/classes/', data),
+  update:  (id, data) => api.put(`/classes/${id}`, data),
+  remove:  (id)       => api.delete(`/classes/${id}`),
+};
+
+// ── Exam Timetable ──────────────────────────────────────────────────────────
+export const examTimetableService = {
+  getAll:  (className, term) =>
+    api.get('/exam-timetable/', { params: { class_name: className, term } }),
+  create:  (data) => api.post('/exam-timetable/', data),
+  update:  (id, data) => api.put(`/exam-timetable/${id}`, data),
+  remove:  (id) => api.delete(`/exam-timetable/${id}`),
+};
+
+// ── Lecture Timetable ───────────────────────────────────────────────────────
+export const lectureTimetableService = {
+  getAll:  (className) =>
+    api.get('/lecture-timetable/', { params: { class_name: className } }),
+  upsert:  (data) => api.post('/lecture-timetable/', data),
+  remove:  (className, day, period) =>
+    api.delete('/lecture-timetable/', { params: { class_name: className, day, period } }),
+};
+
 export default api;
+

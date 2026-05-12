@@ -101,6 +101,7 @@ A premium, high-fidelity School Management System built with React + FastAPI. De
 ## 📸 Screenshots
 
 | Module | Preview |
+
 |--------|---------|
 | **Admin Dashboard** | Full stats, mini calendar, quick actions |
 | **Student Profile** | Avatar, GPA, fees, parent details |
